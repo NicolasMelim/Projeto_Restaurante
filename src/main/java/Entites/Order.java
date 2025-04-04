@@ -12,9 +12,10 @@ public class Order {
     private Date moment;
     private OrderStatus orderStatus;
     private Client client;
-    List<OrderItem> orderItems = new ArrayList<>();
+    List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-    public Order(){}
+    public Order() {
+    }
 
 
     public Order(Date moment, OrderStatus orderStatus, Client client) {
@@ -42,28 +43,41 @@ public class Order {
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
-    public void addItem(OrderItem ord){
+
+    public void addItem(OrderItem ord) {
         orderItems.add(ord);
 
     }
-    public void removeItem(OrderItem ord){
+
+    public void removeItem(OrderItem ord) {
         orderItems.remove(ord);
 
     }
-    public double total(){
-        double sum = 0  ;
-        for (OrderItem item : orderItems){
-            return  sum += item.subTotal();
+
+    public double total() {
+        double sum = 0;
+        for (OrderItem item : orderItems) {
+             sum += item.subTotal();
+
         }
-        return  sum;
+        return sum;
     }
 
     @Override
     public String toString() {
-        return "Order{" +
-                "moment=" + moment +
-                ", orderStatus=" + orderStatus +
-                ", orderItems=" + orderItems +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Momento do Pedido: ");
+        sb.append(sdf.format(moment)).append("\n");
+        sb.append("Status do Pedido: ");
+        sb.append(orderStatus).append("\n");
+        sb.append("Cliente: ");
+        sb.append(client).append("\n");
+        sb.append("Itens do Pedido:\n");
+        for (OrderItem item : orderItems) {
+            sb.append(item).append("\n");
+        }
+        sb.append("Preço Total: R$");
+        sb.append(String.format("%.2f", total()));
+        return sb.toString();
     }
 }
